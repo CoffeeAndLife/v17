@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TProduct implements Serializable{
+    //hhhh
     private Long id;
 
     private String name;
