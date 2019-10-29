@@ -1,0 +1,17 @@
+dubbo:
+  application:
+    name: web-center
+  registry:
+    protocol: zookeeper
+    address: 192.168.142.137:2181
+server:
+  port: 9090
+spring:
+  thymeleaf:
+    cache: false
+
+
+
+
+
+

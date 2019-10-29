@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base href="/"/>
+    <title>Title</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+    <!--展示商品的列表页面-->
+    <!--掌握Bootstrap的特点-->
+    <div class="container-fluid">
+        <div class="row">
+            <!--1.展示开头的按钮-->
+            <div class="col-md-4 col-md-offset-8">
+                <button type="button" class="btn btn-primary" id="to-add">添加</button>
+                <button type="button" class="btn btn-danger">删除</button>
+            </div>
+        </div>
+        <div class="row">
+            <!--2.展示表格-->
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <tr>
+                        <td>ID</td>
+                        <td>商品分类</td>
+                        <td>名称</td>
+                        <td>价格</td>
+                        <td>图片</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr th:each="product : ${page.list}">
+                        <td th:text="${product.id}">ID</td>
+                        <td th:text="${product.typeName}">电子数码</td>
+                        <td th:text="${product.name}">mate30</td>
+                        <td th:text="${product.price}">6999</td>
+                        <td>
+                            <img src="#" th:src="${product.images}"/>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">修改</button>
+                            <button type="button" class="btn btn-danger btn-sm">删除</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <!--3.展示分页栏-->
+            <div class="col-md-6">
+                当前第<span th:text="${page.pageNum}"></span>页，
+                共<span th:text="${page.total}"></span>条记录，共<span th:text="${page.pages}"></span>页
+            </div>
+            <div class="col-md-6">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="pageNum : ${page.navigatepageNums}" th:class="${pageNum == page.pageNum ? 'active':''}">
+                            <a href="#" th:href="|product/page/${pageNum}/${page.pageSize}|" th:text="${pageNum}">1</a>
+                        </li>
+
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!--添加层-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="product/add" method="post" id="addForm">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">商品名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="写相关规则" name="product.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">价格</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="price" name="product.price">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="salePrice" class="col-sm-2 control-label">促销价</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="salePrice" name="product.salePrice">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="images" class="col-sm-2 control-label">图片</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="images" name="product.images">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="salePoint" class="col-sm-2 control-label">卖点</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="salePoint" name="product.salePoint">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="type_id" class="col-sm-2 control-label">商品类别</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="type_id" value="1" name="product.typeId">
+                                <input type="text" class="form-control" id="type_name" value="电子数码" name="product.typeName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDesc" class="col-sm-2 control-label">商品描述</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" id="productDesc" name="productDesc"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //给添加按钮绑定事件
+            $("#to-add").click(function () {
+                //弹出层
+                $('#addModal').modal({
+                    backdrop:"static",
+                    keyboard:false
+                })
+            });
+            
+            $("#add").click(function () {
+                //
+                $("#addForm").submit();
+            })
+        })
+    </script>
+</body>
+</html>
