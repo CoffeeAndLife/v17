@@ -14,3 +14,6 @@ spring:
     username: root
     password: root
 
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
