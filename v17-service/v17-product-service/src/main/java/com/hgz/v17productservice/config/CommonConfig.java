@@ -4,13 +4,18 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
  * @author huangguizhao
  */
-@Configuration
+//@Configuration
 public class CommonConfig {
+
+    public static void main(String[] args){
+
+    }
 
     @Bean
     public PageHelper getPageHelper(){
