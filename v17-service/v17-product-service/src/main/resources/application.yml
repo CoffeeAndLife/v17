@@ -9,10 +9,20 @@ dubbo:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/v17?serverTimezone=UTC
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/v17?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
-    password: root
+    password: XsOgU/X/MNmkt8GPza172MH2/q63+yGTWnAIeNE1qTEIqL0MVCuJjAQwsbgO3I47MzEqy2fq1W40Upyf8GaZcw==
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      filter:
+        config:
+          enabled: true
+      connection-properties: config.decrypt=true;config.decrypt.key=${public-key}
+
+public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJL01bOtE7n5l9qDGZ8bvrqC2Kym0zLuTMhOR2wps2ociO9QRylC+NjIN7nNLY6FPJUsV753cVOu/hDEJGxnIv8CAwEAAQ==
 
 pagehelper:
   helper-dialect: mysql

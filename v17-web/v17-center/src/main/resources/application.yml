@@ -19,7 +19,10 @@ fdfs:
   thumb-image:
     width: 100
     height: 100
-  tracker-list: 10.36.8.8:22122
+  tracker-list: 192.168.142.137:22122
+
+image:
+  server: http://192.168.142.137/
 
 
 

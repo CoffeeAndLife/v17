@@ -10,6 +10,14 @@
   <sql id="Base_Column_List">
     id, pid, name, flag
   </sql>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product_type
+    where flag=1
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
