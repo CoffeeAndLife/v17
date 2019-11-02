@@ -27,6 +27,7 @@ public class IndexController {
         List<TProductType> list = productTypeService.list();
         //2.传递到前端进行展示
         model.addAttribute("list",list);
+        //
         return "index";
     }
 

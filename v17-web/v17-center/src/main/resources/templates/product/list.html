@@ -169,6 +169,9 @@
                     $("#showImage").show();
                     //给隐藏域赋值，作为数值上传
                     $("#images").val(result.data);
+                },
+                'onError'      : function(errorType) {
+                    alert('The error was: ' + errorType);
                 }
             });
 
