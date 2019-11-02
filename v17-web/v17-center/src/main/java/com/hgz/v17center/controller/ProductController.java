@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author huangguizhao
@@ -59,4 +58,7 @@ public class ProductController {
         //跳转回到第一页 展示的时候，按照添加时间排序
         return "redirect:/product/page/1/1";
     }
+
+
 }
+

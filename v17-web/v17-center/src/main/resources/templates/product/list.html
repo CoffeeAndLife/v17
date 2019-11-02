@@ -111,8 +111,9 @@
                         <div class="form-group">
                             <label for="images" class="col-sm-2 control-label">图片</label>
                             <div class="col-sm-10">
-                                <input id="file_upload" type="file" name="file_upload" />
-                                <input type="text" class="form-control" id="images" name="product.images">
+                                <input id="file" type="file" name="file" />
+                                <img src="#" id="showImage" style="width: 100px;height: 100px;display: none;"/>
+                                <input type="hidden" id="images" name="product.images">
                             </div>
                         </div>
                         <div class="form-group">
@@ -129,10 +130,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="productDesc" class="col-sm-2 control-label">商品描述</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" rows="3" id="productDesc" name="productDesc"></textarea>
+                            <label for="productDescEditor" class="col-sm-2 control-label">商品描述</label>
+                            <div class="col-sm-10" id="productDescEditor">
                             </div>
+                            <input type="hidden" name="productDesc" id="productDesc"/>
                         </div>
                     </form>
                 </div>
@@ -152,13 +153,26 @@
 
     <script src="js/jquery.uploadifive.js" type="text/javascript"></script>
 
+    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+
     <script type="text/javascript">
         $(function () {
             //初始化上传按钮
-            $('#file_upload').uploadifive({
+            $('#file').uploadifive({
                 'buttonText'   : '上传',
-                'uploadScript' : 'uploadifive.php'
-                // Put your options here
+                'uploadScript' : 'file/upload',
+                'fileObjName'  : 'file',
+                'onUploadComplete' : function(file, data) {
+                    var result = JSON.parse(data);
+                    //图片的回显
+                    $("#showImage").attr("src",result.data);
+                    $("#showImage").show();
+                    //给隐藏域赋值，作为数值上传
+                    $("#images").val(result.data);
+                },
+                'onError'      : function(errorType) {
+                    alert('The error was: ' + errorType);
+                }
             });
 
             //给添加按钮绑定事件
@@ -171,9 +185,33 @@
             });
             
             $("#add").click(function () {
-                //
+                //获取富文本框当前的内容，填充隐藏域
+                var content = editor.txt.html();
+                $("#productDesc").val(content);
                 $("#addForm").submit();
             })
+
+            //初始化富文本框
+            var E = window.wangEditor;
+            var editor = new E('#productDescEditor');
+            // 自定义菜单配置
+            editor.customConfig.menus = [
+                'head',  // 标题
+                'bold',  // 粗体
+                'fontSize',  // 字号
+                'fontName',  // 字体
+                'foreColor',  // 文字颜色
+                'backColor',  // 背景颜色
+                'emoticon',  // 表情
+                'image',  // 插入图片
+                'video',  // 插入视频
+                'undo',  // 撤销
+                'redo'  // 重复
+            ];
+            // 配置服务器端地址
+            editor.customConfig.uploadFileName = 'files';
+            editor.customConfig.uploadImgServer = '/file/batchUpload';
+            editor.create();
         })
     </script>
 </body>

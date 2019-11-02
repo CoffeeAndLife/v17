@@ -24,10 +24,24 @@
 
         <!--引入MyBatis相关的包-->
         <!--springBoot跟mybatis的整合包-->
+        <!--引入新的连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.0</version>
+            <!--排除掉原先依赖的连接池-->
+            <exclusions>
+                <exclusion>
+                    <artifactId>HikariCP</artifactId>
+                    <groupId>com.zaxxer</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

@@ -2,7 +2,9 @@ package com.hgz.v17productservice;
 
 import com.github.pagehelper.PageInfo;
 import com.hgz.api.IProductService;
+import com.hgz.api.IProductTypeService;
 import com.hgz.entity.TProduct;
+import com.hgz.entity.TProductType;
 import com.hgz.vo.ProductVO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 
 @SpringBootTest
@@ -19,6 +23,26 @@ public class V17ProductServiceApplicationTests {
 
 	@Autowired
 	private IProductService productService;
+
+	@Autowired
+	private IProductTypeService productTypeService;
+
+	@Autowired
+	private DataSource dataSource;
+
+
+	@Test
+	public void poolTest() throws SQLException {
+		System.out.println(dataSource.getConnection());
+	}
+
+	@Test
+	public void listTypeTest(){
+		List<TProductType> list = productTypeService.list();
+		for (TProductType productType : list) {
+			System.out.println(productType.getName());
+		}
+	}
 
 	@Test
 	public void contextLoads() {
