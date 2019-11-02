@@ -34,16 +34,6 @@ public class ProductServiceImpl extends BaseServiceImpl<TProduct> implements IPr
         return productMapper;
     }
 
-    @Override
-    public PageInfo<TProduct> page(Integer pageIndex, Integer pageSize) {
-        //1.设置分页信息
-        PageHelper.startPage(pageIndex,pageSize);
-        //2.获取到集合信息,limit
-        List<TProduct> list = this.list();
-        //3.返回分页对象
-        PageInfo<TProduct> pageInfo = new PageInfo<TProduct>(list,3);
-        return pageInfo;
-    }
 
     @Override
     @Transactional

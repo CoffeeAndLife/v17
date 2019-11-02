@@ -1,5 +1,7 @@
 package com.hgz.commons.base;
 
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 /**
@@ -23,4 +25,6 @@ public interface IBaseService<T> {
     int updateByPrimaryKey(T t);
 
     public List<T> list();
+
+    public PageInfo<T> page(Integer pageIndex, Integer pageSize);
 }

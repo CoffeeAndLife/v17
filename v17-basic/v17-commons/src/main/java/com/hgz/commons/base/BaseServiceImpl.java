@@ -1,5 +1,8 @@
 package com.hgz.commons.base;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 /**
@@ -48,5 +51,16 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T>{
     @Override
     public List<T> list() {
         return getBaseDao().list();
+    }
+
+    @Override
+    public PageInfo<T> page(Integer pageIndex, Integer pageSize) {
+        //1.设置分页信息
+        PageHelper.startPage(pageIndex,pageSize);
+        //2.获取到集合信息,limit
+        List<T> list = this.list();
+        //3.返回分页对象
+        PageInfo<T> pageInfo = new PageInfo<T>(list,3);
+        return pageInfo;
     }
 }

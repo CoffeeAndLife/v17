@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IProductService extends IBaseService<TProduct>{
 
-    public PageInfo<TProduct> page(Integer pageIndex,Integer pageSize);
+    //public PageInfo<TProduct> page(Integer pageIndex,Integer pageSize);
 
     public Long add(ProductVO productVO);//返回主键
 }
