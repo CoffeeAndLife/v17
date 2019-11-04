@@ -2,7 +2,7 @@
 spring:
   data:
     solr:
-      host: http://192.168.142.137:8080/solr
+      host: http://192.168.142.137:8080/solr/
   datasource:
     url: jdbc:mysql://localhost:3306/v17?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root

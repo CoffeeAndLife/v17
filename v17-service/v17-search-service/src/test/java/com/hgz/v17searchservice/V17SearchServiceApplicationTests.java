@@ -61,14 +61,16 @@ public class V17SearchServiceApplicationTests {
 		//1.创建一个document对象
 		SolrInputDocument document = new SolrInputDocument();
 		//2.设置相关的属性值
-		document.setField("id",2);
-		document.setField("product_name","小米MIX5代");
+		document.setField("id",999);
+		document.setField("product_name","小米MIX666代");
 		document.setField("product_price",19999);
 		document.setField("product_sale_point","全球最高像素的手机");
 		document.setField("product_images","123");
 		//3.保存
-		solrClient.add(document);
-		solrClient.commit();
+		//solrClient.add(document);
+		//solrClient.commit();
+		solrClient.add("collection2",document);
+		solrClient.commit("collection2");
 	}
 
 	@Test
