@@ -913,12 +913,12 @@
         </div>
         <div class="shop-right-con">
             <ul class="shop-ul-tu shop-ul-tu1">
-                <li th:each="product : ${list}">
+                <li th:each="product : ${page.list}">
                     <div class="li-top">
-                        <a href="#" class="li-top-tu"><img src="images/sp-con-r-tu.gif" th:src="${product.images}"/></a>
+                        <a href="#" class="li-top-tu"><img src="images/sp-con-r-tu.gif" th:src="${product.images}" style="width: 200px;height: 200px;"/></a>
                         <p class="jiage">￥<span class="sp1" th:text="|${product.price}|">￥109</span><span class="sp2">￥999999</span></p>
                     </div>
-                    <p class="miaoshu" th:text="${product.name}">德国原装进口Wurenbacher瓦伦冰黑啤5L/桶</p>
+                    <p class="miaoshu" th:utext="${product.name}">德国原装进口Wurenbacher瓦伦冰黑啤5L/桶</p>
                     <div class="li-md">
                         <div class="md-l f-l">
                             <p class="md-l-l f-l" ap="">1</p>
