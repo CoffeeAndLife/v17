@@ -36,4 +36,6 @@ public interface ISearchService {
      * @return
      */
     public ResultBean queryByKeywords(String keywords);
+
+    ResultBean queryByKeywords(String keywords, Integer pageIndex, Integer pageSize);
 }
