@@ -13,6 +13,7 @@
         <module>v17-basic</module>
         <module>v17-service</module>
         <module>v17-web</module>
+        <module>v17temp</module>
     </modules>
 
 

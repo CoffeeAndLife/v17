@@ -9,6 +9,12 @@ server:
 spring:
   thymeleaf:
     cache: false
+  rabbitmq:
+    host: 192.168.142.137
+    port: 5672
+    username: java1907
+    password: 123
+    virtual-host: /java1907
 
 #上传文件
 fdfs:
