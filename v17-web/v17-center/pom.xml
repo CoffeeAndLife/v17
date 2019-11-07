@@ -58,6 +58,12 @@
 			<artifactId>fastdfs-client</artifactId>
 			<version>1.26.1-RELEASE</version>
 		</dependency>
+
+		<!--引入消息中间件的依赖-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
