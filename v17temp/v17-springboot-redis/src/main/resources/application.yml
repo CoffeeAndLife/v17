@@ -1,0 +1,5 @@
+spring:
+  redis:
+    host: 192.168.142.137
+    port: 6379
+    password: java1907
