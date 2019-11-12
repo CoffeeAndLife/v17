@@ -11,6 +11,9 @@
     <modules>
         <module>v17-product-api</module>
         <module>v17-search-api</module>
+        <module>v17-user-api</module>
+        <module>v17-sms-api</module>
+        <module>v17-email-api</module>
     </modules>
 
 

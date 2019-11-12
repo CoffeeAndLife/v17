@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    尊敬的白金用户<span th:text="${username}"></span>，
+    请点击以下链接完成激活：
+    <a href="http://localhost:9094/user/activte?token=123">激活账号</a>
+</body>
+</html>

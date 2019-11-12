@@ -11,6 +11,10 @@
     <modules>
         <module>v17-rabbitmq-java</module>
         <module>v17-java-review</module>
+        <module>v17-redis</module>
+        <module>v17-child</module>
+        <module>v17-aliyun-sms</module>
+        <module>v17-email</module>
     </modules>
 
 

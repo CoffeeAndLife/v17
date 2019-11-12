@@ -11,11 +11,7 @@ import java.util.Properties;
  * @author huangguizhao
  */
 //@Configuration
-public class CommonConfig {
-
-    public static void main(String[] args){
-
-    }
+public class PageInfoConfig {
 
     @Bean
     public PageHelper getPageHelper(){
