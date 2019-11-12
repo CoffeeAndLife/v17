@@ -1,0 +1,25 @@
+dubbo:
+  application:
+    name: email-service
+  registry:
+    protocol: zookeeper
+    address: 192.168.142.137:2181
+  protocol:
+    port: 28814
+
+spring:
+  rabbitmq:
+    host: 192.168.142.137
+    port: 5672
+    username: java1907
+    password: 123
+    virtual-host: /java1907
+  mail:
+    host: smtp.163.com
+    username: javaeechina@163.com
+    password: abc
+
+email:
+  server: javaeechina@163.com
+server:
+  port: 8085

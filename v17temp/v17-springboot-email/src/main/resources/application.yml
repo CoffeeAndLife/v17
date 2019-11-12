@@ -1,0 +1,5 @@
+spring:
+  mail:
+    host: smtp.163.com
+    username: javaeechina@163.com
+    password: abc
