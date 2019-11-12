@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置redis连接池对象 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大空闲数 -->
+        <property name="maxIdle" value="50" />
+        <!-- 最大连接数 -->
+        <property name="maxTotal" value="100" />
+        <!-- 最大等待时间 -->
+        <property name="maxWaitMillis" value="20000" />
+    </bean>
+
+    <!-- 配置redis连接工厂 -->
+    <bean id="connectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- 连接池配置 -->
+        <property name="poolConfig" ref="poolConfig" />
+        <!-- 连接主机 -->
+        <property name="hostName" value="192.168.142.137" />
+        <!-- 端口 -->
+        <property name="port" value="6379" />
+        <!-- 密码 -->
+        <property name="password" value="java1907" />
+    </bean>
+
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+    <!-- 配置redis模板对象 -->
+    <bean class="org.springframework.data.redis.core.RedisTemplate">
+        <!-- 配置连接工厂 -->
+        <property name="connectionFactory" ref="connectionFactory" />
+        <!--统一配置序列化方式-->
+        <property name="keySerializer" ref="stringRedisSerializer"/>
+        <property name="hashKeySerializer" ref="stringRedisSerializer"/>
+    </bean>
+</beans>

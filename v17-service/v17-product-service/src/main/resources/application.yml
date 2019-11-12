@@ -21,6 +21,10 @@ spring:
         config:
           enabled: true
       connection-properties: config.decrypt=true;config.decrypt.key=${public-key}
+  redis:
+    host: 192.168.142.137
+    port: 6379
+    password: java1907
 
 public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJL01bOtE7n5l9qDGZ8bvrqC2Kym0zLuTMhOR2wps2ociO9QRylC+NjIN7nNLY6FPJUsV753cVOu/hDEJGxnIv8CAwEAAQ==
 

@@ -11,6 +11,7 @@
     <modules>
         <module>v17-rabbitmq-java</module>
         <module>v17-java-review</module>
+        <module>v17-redis</module>
     </modules>
 
 
