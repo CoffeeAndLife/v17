@@ -5,16 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hgz</groupId>
-    <artifactId>v17-api</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>v17-email-api</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>v17-product-api</module>
-        <module>v17-search-api</module>
-        <module>v17-user-api</module>
-        <module>v17-sms-api</module>
-        <module>v17-email-api</module>
-    </modules>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.hgz</groupId>
+            <artifactId>v17-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
