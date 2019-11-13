@@ -73,6 +73,19 @@ public class UserServiceImpl extends BaseServiceImpl<TUser> implements IUserServ
     }
 
     @Override
+    public ResultBean checkLogin(TUser user) {
+        //1.根据用户输入的账号（手机/邮箱）信息，去查询
+        TUser currentUser = userMapper.selectByIdentification(user.getUsername());
+        //2.根据查询出来的密码信息，进行比较
+        if(currentUser != null){
+            if(user.getPassword().equals(currentUser.getPassword())){
+                return new ResultBean("200",currentUser.getUsername());
+            }
+        }
+        return new ResultBean("404",null);
+    }
+
+    @Override
     public IBaseDao<TUser> getBaseDao() {
         return userMapper;
     }

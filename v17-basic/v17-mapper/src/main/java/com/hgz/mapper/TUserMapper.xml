@@ -14,6 +14,13 @@
   <sql id="Base_Column_List">
     id, username, password, phone, email, flag, create_time, update_time
   </sql>
+
+  <select id="selectByIdentification" resultMap="BaseResultMap">
+    select username,password from t_user where flag=1
+    and phone=#{username}
+    or email=#{username}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
