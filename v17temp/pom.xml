@@ -15,6 +15,7 @@
         <module>v17-child</module>
         <module>v17-aliyun-sms</module>
         <module>v17-email</module>
+        <module>v17-jwt</module>
     </modules>
 
 

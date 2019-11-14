@@ -15,6 +15,10 @@ public interface IUserService extends IBaseService<TUser>{
 
     public ResultBean generateCode(String identification);
 
+    ResultBean checkLogin(TUser user);
+
+    ResultBean checkIsLogin(String uuid);
+
     //目前分析得到的结论
     //添加用户，是否可以用默认的实现？
     //可以。

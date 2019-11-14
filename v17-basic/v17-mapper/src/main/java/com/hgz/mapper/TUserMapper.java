@@ -5,4 +5,5 @@ import com.hgz.entity.TUser;
 
 public interface TUserMapper extends IBaseDao<TUser>{
 
+    TUser selectByIdentification(String username);
 }

@@ -1436,16 +1436,50 @@
         沪ICP备13044278号<span>|</span>合字B1.B2-20130004<span>|</span>营业执照<span>|</span>互联网药品信息服务资格证<span>|</span>互联网药品交易服务资格证
     </p>
 </div>
+
+
+
 <script type="text/javascript">
+
+    function deal(data) {
+        console.log(data);
+    }
+
     $(function () {
         //异步加载分类信息，然后解析服务端返回的json，渲染出分类信息
-        $.ajax({
+        /*$.ajax({
             url:"index/listType",
+            success:function(data){
+                console.log(data);
+            }
+        });*/
+
+        //异步调用登录状态查询接口，验证用户登录状态
+        //控制了ajax的方式，默认不允许跨域访问
+        //不能接受不同源的信息
+
+        //为了解决这个问题。jQuery对此作为了封装，但是其本质用的就是script标签来实现的
+        /*$.ajax({
+            url:"http://localhost:9095/sso/checkIsLogin4JSONP",
+            dataType:"jsonp",
+            jsonpCallback:"deal"
+        });*/
+
+        $.ajax({
+            url:"http://sso.qf.com:9095/sso/checkIsLogin",
+            crossDomain:true,
+            xhrFields:{withCredentials:true},
             success:function(data){
                 console.log(data);
             }
         })
     })
+
+
 </script>
+
+<!--并没有限制-->
+<!--<script src="http://localhost:9095/sso/checkIsLogin4JSONP?callback=deal"></script>-->
+
 </body>
 </html>

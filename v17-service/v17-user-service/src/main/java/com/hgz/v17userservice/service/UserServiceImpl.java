@@ -8,6 +8,9 @@ import com.hgz.commons.pojo.ResultBean;
 import com.hgz.commons.util.CodeUtils;
 import com.hgz.entity.TUser;
 import com.hgz.mapper.TUserMapper;
+import com.hgz.v17userservice.util.JwtUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,6 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -70,6 +74,61 @@ public class UserServiceImpl extends BaseServiceImpl<TUser> implements IUserServ
         rabbitTemplate.convertAndSend("email-exchange","email.birthday",params2);
 
         return new ResultBean("200","OK");
+    }
+
+    @Override
+    public ResultBean checkLogin(TUser user) {
+        //1.根据用户输入的账号（手机/邮箱）信息，去查询
+        TUser currentUser = userMapper.selectByIdentification(user.getUsername());
+        //2.根据查询出来的密码信息，进行比较
+        if(currentUser != null){
+            if(user.getPassword().equals(currentUser.getPassword())){
+                //1.生成uuid
+                //String uuid = UUID.randomUUID().toString();
+                //2.保存到redis中,并设置有效期为30分钟，代替原先的session
+                //redisTemplate.opsForValue().set("user:token:"+uuid,currentUser.getUsername(),30,TimeUnit.MINUTES);
+
+                //生成令牌
+                JwtUtils jwtUtils = new JwtUtils();
+                jwtUtils.setSecretKey("java1907");
+                jwtUtils.setTtl(30*60*1000);
+
+                String jwtToken = jwtUtils.createJwtToken(currentUser.getId().toString(), currentUser.getUsername());
+
+                return new ResultBean("200",jwtToken);
+            }
+        }
+        return new ResultBean("404",null);
+    }
+
+    @Override
+    public ResultBean checkIsLogin(String uuid) {
+        //1.拼接key
+        //StringBuilder key = new StringBuilder("user:token:").append(uuid);
+        //2.查询redis
+        //String username = (String) redisTemplate.opsForValue().get(key.toString());
+        //3.返回结果
+        /*if(username != null){
+            //刷新凭证的有效期
+            redisTemplate.expire(key.toString(),30,TimeUnit.MINUTES);
+            //
+            return new ResultBean("200",username);
+        }*/
+        JwtUtils jwtUtils = new JwtUtils();
+        jwtUtils.setSecretKey("java1907");
+
+        //ExpiredJwtException
+        //RuntimeException
+        //解析令牌
+        try {
+            Claims claims = jwtUtils.parseJwtToken(uuid);
+            String username = claims.getSubject();
+            return new ResultBean("200",username);
+        }catch (RuntimeException ex){
+            //如果针对不同的异常，我们需要区分对待，那么就应该写多个catch，分别处理
+            //如果是一样的处理方式，那么直接统一就行
+            return new ResultBean("404",null);
+        }
     }
 
     @Override
