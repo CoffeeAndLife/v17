@@ -14,6 +14,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -32,6 +34,9 @@ public class UserServiceImpl extends BaseServiceImpl<TUser> implements IUserServ
 
     @Resource(name = "myStringRedisTemplate")
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -82,7 +87,8 @@ public class UserServiceImpl extends BaseServiceImpl<TUser> implements IUserServ
         TUser currentUser = userMapper.selectByIdentification(user.getUsername());
         //2.根据查询出来的密码信息，进行比较
         if(currentUser != null){
-            if(user.getPassword().equals(currentUser.getPassword())){
+            //if(user.getPassword().equals(currentUser.getPassword())){
+            if(passwordEncoder.matches(user.getPassword(),currentUser.getPassword())){
                 //1.生成uuid
                 //String uuid = UUID.randomUUID().toString();
                 //2.保存到redis中,并设置有效期为30分钟，代替原先的session
