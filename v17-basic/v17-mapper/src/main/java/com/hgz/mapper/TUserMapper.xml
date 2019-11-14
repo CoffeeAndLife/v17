@@ -16,7 +16,7 @@
   </sql>
 
   <select id="selectByIdentification" resultMap="BaseResultMap">
-    select username,password from t_user where flag=1
+    select id,username,password from t_user where flag=1
     and phone=#{username}
     or email=#{username}
   </select>

@@ -1,5 +1,6 @@
 package com.hgz.v17userservice;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hgz.api.IUserService;
 import com.hgz.commons.pojo.ResultBean;
 import com.hgz.entity.TUser;
