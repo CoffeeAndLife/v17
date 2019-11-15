@@ -1,11 +1,11 @@
 dubbo:
   application:
-    name: web-sso
+    name: web-cart
   registry:
     protocol: zookeeper
     address: 192.168.142.137:2181
 server:
-  port: 9095
+  port: 9097
 spring:
   thymeleaf:
     cache: false
@@ -15,7 +15,6 @@ spring:
     username: java1907
     password: 123
     virtual-host: /java1907
-
 
 
 

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.hgz</groupId>
-	<artifactId>v17-sso</artifactId>
+	<artifactId>v17-cart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>v17-sso</name>
+	<name>v17-cart</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -41,7 +41,12 @@
 			<version>0.2.0</version>
 		</dependency>
 
-		<!--引入userAPI-->
+		<dependency>
+			<groupId>com.hgz</groupId>
+			<artifactId>v17-cart-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.hgz</groupId>
 			<artifactId>v17-user-api</artifactId>

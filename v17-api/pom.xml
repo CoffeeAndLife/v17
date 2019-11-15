@@ -14,6 +14,7 @@
         <module>v17-user-api</module>
         <module>v17-sms-api</module>
         <module>v17-email-api</module>
+        <module>v17-cart-api</module>
     </modules>
 
 
