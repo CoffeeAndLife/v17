@@ -20,8 +20,22 @@ public class V17SpringbootRedisApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Object k1 = redisTemplate.opsForValue().get("k1");
-		System.out.println(k1);
+		/*Object k1 = redisTemplate.opsForValue().get("k1");
+		System.out.println(k1);*/
+
+		Student student = new Student();
+		student.setName("zhangsan");
 	}
 
+	class Student{
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
 }

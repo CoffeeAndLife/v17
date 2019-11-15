@@ -101,7 +101,12 @@ public class UserServiceImpl extends BaseServiceImpl<TUser> implements IUserServ
 
                 String jwtToken = jwtUtils.createJwtToken(currentUser.getId().toString(), currentUser.getUsername());
 
-                return new ResultBean("200",jwtToken);
+                //TODO 构建一个map，返回令牌和唯一标识
+                Map<String,String> params = new HashMap<>();
+                params.put("jwttoken",jwtToken);
+                params.put("username",currentUser.getUsername());
+
+                return new ResultBean("200",params);
             }
         }
         return new ResultBean("404",null);

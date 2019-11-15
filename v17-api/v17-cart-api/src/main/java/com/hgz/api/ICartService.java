@@ -21,4 +21,6 @@ public interface ICartService {
     public ResultBean update(String token,Long productId,Integer count);
 
     public ResultBean query(String token);
+
+    public ResultBean merge(String nologinKey,String loginKey);
 }
