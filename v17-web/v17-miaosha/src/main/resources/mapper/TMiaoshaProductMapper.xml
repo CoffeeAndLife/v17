@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hgz.v17miaosha.mapper.TMiaoshaProductMapper">
+  <resultMap id="BaseResultMap" type="com.hgz.v17miaosha.entity.TMiaoshaProduct">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_images" jdbcType="VARCHAR" property="productImages" />
+    <result column="product_type_id" jdbcType="INTEGER" property="productTypeId" />
+    <result column="product_type_name" jdbcType="VARCHAR" property="productTypeName" />
+    <result column="product_price" jdbcType="BIGINT" property="productPrice" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="miaosha_status" jdbcType="VARCHAR" property="miaoshaStatus" />
+    <result column="miaosha_check" jdbcType="BIT" property="miaoshaCheck" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id, product_name, product_images, product_type_id, product_type_name, 
+    product_price, sale_price, count, start_time, end_time, miaosha_status, miaosha_check, 
+    flag, create_time, update_time, create_user, update_user
+  </sql>
+
+  <select id="getCanStartKillProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_miaosha_product
+    where flag=1 and miaosha_check=1 and miaosha_status=0
+    and NOW() BETWEEN start_time and end_time
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_miaosha_product
+    where id = #{id,jdbcType=BIGINT} for UPDATE
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_miaosha_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hgz.v17miaosha.entity.TMiaoshaProduct">
+    insert into t_miaosha_product (id, product_id, product_name, 
+      product_images, product_type_id, product_type_name, 
+      product_price, sale_price, count, 
+      start_time, end_time, miaosha_status, 
+      miaosha_check, flag, create_time, 
+      update_time, create_user, update_user
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, 
+      #{productImages,jdbcType=VARCHAR}, #{productTypeId,jdbcType=INTEGER}, #{productTypeName,jdbcType=VARCHAR}, 
+      #{productPrice,jdbcType=BIGINT}, #{salePrice,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{miaoshaStatus,jdbcType=VARCHAR}, 
+      #{miaoshaCheck,jdbcType=BIT}, #{flag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}, #{updateUser,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hgz.v17miaosha.entity.TMiaoshaProduct">
+    insert into t_miaosha_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productImages != null">
+        product_images,
+      </if>
+      <if test="productTypeId != null">
+        product_type_id,
+      </if>
+      <if test="productTypeName != null">
+        product_type_name,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="miaoshaStatus != null">
+        miaosha_status,
+      </if>
+      <if test="miaoshaCheck != null">
+        miaosha_check,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImages != null">
+        #{productImages,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeId != null">
+        #{productTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="productTypeName != null">
+        #{productTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="miaoshaStatus != null">
+        #{miaoshaStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshaCheck != null">
+        #{miaoshaCheck,jdbcType=BIT},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hgz.v17miaosha.entity.TMiaoshaProduct">
+    update t_miaosha_product
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImages != null">
+        product_images = #{productImages,jdbcType=VARCHAR},
+      </if>
+      <if test="productTypeId != null">
+        product_type_id = #{productTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="productTypeName != null">
+        product_type_name = #{productTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        product_price = #{productPrice,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        sale_price = #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="miaoshaStatus != null">
+        miaosha_status = #{miaoshaStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshaCheck != null">
+        miaosha_check = #{miaoshaCheck,jdbcType=BIT},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hgz.v17miaosha.entity.TMiaoshaProduct">
+    update t_miaosha_product
+    set product_id = #{productId,jdbcType=BIGINT},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_images = #{productImages,jdbcType=VARCHAR},
+      product_type_id = #{productTypeId,jdbcType=INTEGER},
+      product_type_name = #{productTypeName,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=BIGINT},
+      sale_price = #{salePrice,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      miaosha_status = #{miaoshaStatus,jdbcType=VARCHAR},
+      miaosha_check = #{miaoshaCheck,jdbcType=BIT},
+      flag = #{flag,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=BIGINT},
+      update_user = #{updateUser,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
