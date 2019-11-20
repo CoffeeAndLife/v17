@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--页面-->
+    名称：<span th:text="${product.productName}"></span><br/>
+    原价：<span th:text="${product.productPrice}"></span><br/>
+    秒杀价：<span th:text="${product.salePrice}"></span><br/>
+
+    <!--以服务器的时间为准-->
+    <input type="button" value="立即抢购"/>
+    <input type="button" value="即将开始"/>
+
+
+</body>
+</html>

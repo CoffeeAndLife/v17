@@ -1,0 +1,16 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.142.134:3306/miaosha?&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 192.168.142.134
+    port: 6379
+    password: java1907
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
