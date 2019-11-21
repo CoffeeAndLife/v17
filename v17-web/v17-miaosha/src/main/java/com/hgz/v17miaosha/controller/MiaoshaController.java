@@ -1,6 +1,7 @@
 package com.hgz.v17miaosha.controller;
 
 import com.hgz.v17miaosha.entity.TMiaoshaProduct;
+import com.hgz.v17miaosha.exception.MiaoshaException;
 import com.hgz.v17miaosha.pojo.ResultBean;
 import com.hgz.v17miaosha.service.IMiaoShaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,16 @@ public class MiaoshaController {
 
     @GetMapping("kill")
     @ResponseBody
-    public ResultBean kill(Long productId){
+    public ResultBean kill(Long userId,Long id){
         //TODO 调用用户服务，获取到当前的登录用户
         //假设当前用户为1号用户
-        Long userId = 1L;
+        //Long userId = 1L;
         //
-        return miaoShaService.kill(userId,productId);
+        try {
+            return miaoShaService.kill(userId,id);
+        }catch (MiaoshaException e){
+            //e.getMessage() 失败的具体原因
+            return new ResultBean("404",e.getMessage());
+        }
     }
 }

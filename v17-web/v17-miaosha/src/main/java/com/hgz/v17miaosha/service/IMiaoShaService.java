@@ -9,5 +9,5 @@ import com.hgz.v17miaosha.pojo.ResultBean;
 public interface IMiaoShaService {
     TMiaoshaProduct getById(Long id);
 
-    ResultBean kill(Long userId, Long productId);
+    ResultBean kill(Long userId, Long id);
 }

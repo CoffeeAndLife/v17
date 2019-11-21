@@ -35,6 +35,14 @@
     and NOW() BETWEEN start_time and end_time
   </select>
 
+  <select id="getCanStopKillProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_miaosha_product
+    where flag=1 and miaosha_check=1 and miaosha_status=1
+    and now()>=end_time
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

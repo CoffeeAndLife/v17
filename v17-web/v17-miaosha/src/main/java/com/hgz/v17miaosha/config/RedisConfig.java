@@ -13,8 +13,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean(name = "myStringRedisTemplate")
-    public RedisTemplate<String,Object> getRedisTemplate(RedisConnectionFactory connectionFactory){
+    public RedisTemplate<String,Object> getStringRedisTemplate(RedisConnectionFactory connectionFactory){
         RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        //
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        return redisTemplate;
+    }
+
+    @Bean(name = "longRedisTemplate")
+    public RedisTemplate<String,Long> getLongRedisTemplate(RedisConnectionFactory connectionFactory){
+        RedisTemplate<String,Long> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         //
         redisTemplate.setKeySerializer(new StringRedisSerializer());
