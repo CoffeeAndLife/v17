@@ -18,4 +18,6 @@ public interface TMiaoshaProductMapper {
     int updateByPrimaryKey(TMiaoshaProduct record);
 
     List<TMiaoshaProduct> getCanStartKillProduct();
+
+    List<TMiaoshaProduct> getCanStopKillProduct();
 }
