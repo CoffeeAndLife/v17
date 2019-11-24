@@ -3,18 +3,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <base href="/"/>
     <title>Title</title>
 </head>
 <body>
     <!--页面-->
+    <input type="hidden" id="seckillId" th:value="${product.id}">
     名称：<span th:text="${product.productName}"></span><br/>
     原价：<span th:text="${product.productPrice}"></span><br/>
     秒杀价：<span th:text="${product.salePrice}"></span><br/>
 
     <!--以服务器的时间为准-->
-    <input type="button" value="立即抢购"/>
-    <input type="button" value="即将开始"/>
+    <input type="button" value="立即抢购" id="kill"/>
 
+
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#kill").click(function () {
+                var seckillId = $("#seckillId").val();
+                $.ajax({
+                    //userId真实情况不是客户端来传递，服务端来判断当前的登录用户是谁，从而获取到
+                    url:"miaosha/getPath?userId=1&seckillId="+seckillId,
+                    success:function (result) {
+                        //
+                        if(result.statusCode == 200){
+                            var path = result.data;
+                        }
+                    }
+                })
+            })
+        })
+
+    </script>
 
 </body>
 </html>

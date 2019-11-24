@@ -10,14 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huangguizhao
@@ -99,7 +98,19 @@ public class MiaoshaServiceImpl implements IMiaoShaService{
 
 
     @Override
-    public ResultBean kill(Long userId, Long id) {
+    public ResultBean kill(Long userId, Long seckillId, String path) {
+
+        //判断当前的path是否合法
+        StringBuilder pathKey = new StringBuilder("miaosha:")
+                .append(userId).append(":")
+                .append(seckillId);
+        Object o = redisTemplate.opsForValue().get(pathKey.toString());
+        if(o == null){
+            throw new MiaoshaException("不是合法的秒杀路径");
+        }
+        //一次性有效,用完即删除
+        redisTemplate.delete(pathKey.toString());
+
         /*
         1，未开始
         2，已结束
@@ -109,7 +120,7 @@ public class MiaoshaServiceImpl implements IMiaoShaService{
         */
         //1.获取到当前秒杀活动的信息
         //TMiaoshaProduct product = productMapper.selectByPrimaryKey(id);
-        StringBuilder killInfoKey = new StringBuilder("miaosha:info:").append(id);
+        StringBuilder killInfoKey = new StringBuilder("miaosha:info:").append(seckillId);
         TMiaoshaProduct product = (TMiaoshaProduct) redisTemplate.opsForValue().get(killInfoKey.toString());
 
         //2.未开始
@@ -121,7 +132,7 @@ public class MiaoshaServiceImpl implements IMiaoShaService{
             throw new MiaoshaException("当前活动已结束，请下次再来");
         }
         //4.确权用户信息的key
-        StringBuilder key = new StringBuilder("miaosha:user:").append(id);
+        StringBuilder key = new StringBuilder("miaosha:user:").append(seckillId);
         //获取到了抢购权
         Long result = redisTemplate.opsForSet().add(key.toString(), userId);
         if(result == 0){
@@ -131,7 +142,7 @@ public class MiaoshaServiceImpl implements IMiaoShaService{
         //miaosha:user:1------Set(101,102)
         //miaosha:user:2------Set(101,103)
         //获取当前的活动对应的商品
-        StringBuilder killKey = new StringBuilder("miaosha:product:").append(id);
+        StringBuilder killKey = new StringBuilder("miaosha:product:").append(seckillId);
         Long productId = (Long) redisTemplate.opsForList().leftPop(killKey.toString());
         if(productId == null){
             //移除中奖用户
@@ -156,5 +167,36 @@ public class MiaoshaServiceImpl implements IMiaoShaService{
         rabbitTemplate.convertAndSend("order-exchange","order.create",params);
 
         return new ResultBean("200",orderNo);
+    }
+
+    @Override
+    public ResultBean getPath(Long userId, Long seckillId) {
+        //1.客户端发起请求，获取到动态生成的path（前提，到了秒杀时间+当前用户已经登录）
+        //将path保存到redis中
+        //key------------------------------value
+        //miaosha:userId:seckillId---------path
+        StringBuilder killInfoKey = new StringBuilder("miaosha:info:").append(seckillId);
+        TMiaoshaProduct product = (TMiaoshaProduct) redisTemplate.opsForValue().get(killInfoKey.toString());
+
+        //2.未开始
+        if ("0".equals(product.getMiaoshaStatus())){
+            throw new MiaoshaException("当前活动还未开始，请耐心等候");
+        }
+        //3.已结束
+        if("2".equals(product.getMiaoshaStatus())){
+            throw new MiaoshaException("当前活动已结束，请下次再来");
+        }
+
+        //可以获取动态的秒杀地址
+        String path = UUID.randomUUID().toString();
+        //将path保存到redis中
+        StringBuilder pathKey = new StringBuilder("miaosha:")
+                .append(userId).append(":")
+                .append(seckillId);
+        redisTemplate.opsForValue().set(pathKey.toString(),path);
+        //设置该地址一分钟有效
+        redisTemplate.expire(pathKey.toString(),1, TimeUnit.MINUTES);
+
+        return new ResultBean("200",path);
     }
 }
