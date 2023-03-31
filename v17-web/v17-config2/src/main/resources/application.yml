@@ -1,0 +1,12 @@
+
+server:
+  port: 8888
+
+spring:
+  rabbitmq:
+    host: 192.168.142.134
+    port: 5672
+    username: java1907
+    password: 123
+    virtual-host: /java1907
+    publisher-confirms: true
